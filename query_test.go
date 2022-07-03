@@ -10,7 +10,7 @@ import (
 )
 
 func GetConnection() *sql.DB {
-	db, err := sql.Open("mysql", "root:@tcp(host:3306)/gom")
+	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/gom")
 	if err != nil {
 		panic(err)
 	}
@@ -26,10 +26,10 @@ func GetConnection() *sql.DB {
 func TestInsertSql(t *testing.T) {
 	db := GetConnection()
 	defer db.Close()
-
+	
 	ctx := context.Background()
 
-	query := "INSERT INTO people VALUES(nil,'Anselma Hanadya Putri')"
+	query := "INSERT INTO people(id, fullname) VALUES('','Ngolo Kante')"
 	_, err := db.ExecContext(ctx, query)
 	if err != nil {
 		panic(err)
