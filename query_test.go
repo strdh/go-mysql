@@ -37,3 +37,18 @@ func TestInsertSql(t *testing.T) {
 
 	fmt.Println("Success Add")
 }
+
+func TestSelect(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	query := "SELECT * FROM people"
+	rows, err := db.QueryContext(ctx, query)
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+}
