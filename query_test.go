@@ -23,20 +23,20 @@ func GetConnection() *sql.DB {
 	return db
 }
 
-func TestInsertSql(t *testing.T) {
-	db := GetConnection()
-	defer db.Close()
+// func TestInsertSql(t *testing.T) {
+// 	db := GetConnection()
+// 	defer db.Close()
 	
-	ctx := context.Background()
+// 	ctx := context.Background()
 
-	query := "INSERT INTO people(id, fullname) VALUES('','Ngolo Kante')"
-	_, err := db.ExecContext(ctx, query)
-	if err != nil {
-		panic(err)
-	}
+// 	query := "INSERT INTO people(id, fullname) VALUES('','Ngolo Kante')"
+// 	_, err := db.ExecContext(ctx, query)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	fmt.Println("Success Add")
-}
+// 	fmt.Println("Success Add")
+// }
 
 func TestSelect(t *testing.T) {
 	db := GetConnection()
@@ -48,6 +48,17 @@ func TestSelect(t *testing.T) {
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		panic(err)
+	}
+
+	for rows.Next() {
+		var id int 
+		var name string 
+		err = rows.Scan(&id, &name)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Id   : ", id)
+		fmt.Println("Name : ", name)
 	}
 
 	defer rows.Close()
